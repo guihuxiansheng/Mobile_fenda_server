@@ -9,7 +9,7 @@
 		
 		function index()
 		{
-			$user_list=db("user")->
+			
 		}
 	}
 ?>

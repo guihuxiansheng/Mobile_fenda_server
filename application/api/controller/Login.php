@@ -9,8 +9,7 @@
 	{
 		
 		function index(){
-			var_dump(Session::get('user'));
-			return $this->login;
+			return json($this->login);
 		}
 		function login(){
 			$user = input('phone');
@@ -34,6 +33,7 @@
 				]);
 			}
 			if($db_user['user_pwd'] === md5($pwd)){
+				unset($db_user['user_pwd']);
 				Session::set('user',$db_user);
 				return json([
 					'status'=> 0,
@@ -45,6 +45,13 @@
 					'message'=> '密码不正确！'
 				]);
 			}
+		}
+		function logout(){
+			Session::delete('user');
+			return json([
+				'status'=> 0,
+				'message'=> '退出登录成功！'
+			]);
 		}
 		function register(){
 
