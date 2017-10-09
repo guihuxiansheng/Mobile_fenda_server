@@ -8,13 +8,13 @@
 	*/
 	class Islogin extends Controller
 	{
+		protected $login;
 		function __construct()
 		{
 			parent::__construct();
 			$ses_user = Session::get('user');
-			if(isset($ses_user)){
-				$user = db('user')->where(['id'=>$ses_user])->find();
-				$this->assign('user',$user);
+			if(!empty($ses_user)){
+				$this->login = db('user')->where(['id'=>$ses_user])->find();
 			}
 		}
 	}
