@@ -10,7 +10,7 @@
 			return $this->fetch();
 		}
 		function logout(){
-			Session::delete('user');
+			Session::delete('admin_user');
 			$this->redirect('./login');
 		}
 	}

@@ -41,7 +41,7 @@
 				]);
 			}
 			if($admin_find['password'] === md5($pwd)){
-				Session::set('user', $admin_find);
+				Session::set('admin_user', $admin_find);
 				return json([
 					'status' => 0,
 					'message' => '登录成功！'

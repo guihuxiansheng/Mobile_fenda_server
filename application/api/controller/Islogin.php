@@ -12,9 +12,12 @@
 		function __construct()
 		{
 			parent::__construct();
-			$ses_user = Session::get('user');
-			if(!empty($ses_user)){
-				$this->login = db('user')->where(['id'=>$ses_user])->find();
+			$this->login = Session::get('user');
+			header('Access-Control-Allow-Origin: *');
+			header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
+			header('Access-Control-Allow-Methods: GET, POST, PUT');
+			if($_SERVER['REQUEST_METHOD'] == 'OPTIONS'){
+			    exit;
 			}
 		}
 	}
