@@ -1,16 +1,17 @@
 <?php
 	namespace app\admin\controller;
+	use \think\Session;
 	/**
 	* 
 	*/
 	class Index extends Islogin
 	{
 		function index(){
-			if($this->login){
-				return $this->fetch();
-			}else{
-				$this->redirect(url('/admin/login'));
-			}
+			return $this->fetch();
+		}
+		function logout(){
+			Session::delete('user');
+			$this->redirect('./login');
 		}
 	}
 ?>

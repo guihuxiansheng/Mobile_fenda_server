@@ -12,14 +12,12 @@ body{
 	background: radial-gradient(#85d0f1, #4396c0); /* 标准的语法 */
 }
 .login{
-	position: absolute;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	right: 0;
-	margin: auto;
-	width: 420px;
-	height: 350px;
+	position:absolute;
+    top:50%;
+    left: 50%;
+    width: 400px;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
 	border-radius: 5px;
 	box-shadow: 0 0 5px 0 #ccc;
 	background: #fff;
@@ -36,6 +34,9 @@ form{
 	border-radius: 5px 5px 0 0;
 	margin-bottom: 10px;
 }
-form small{
-	visibility: hidden;
+.form-text{
+	display: none;
+}
+.form-text.invalid-feedback{
+	visibility: visible;
 }

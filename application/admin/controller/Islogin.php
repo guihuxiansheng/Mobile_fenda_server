@@ -10,7 +10,11 @@
 		function __construct()
 		{
 			parent::__construct();
-			$this->login = Session::get('user')?Session::get('user'):'';
+			$this->login = Session::get('user');
+			$request=  \think\Request::instance();
+			if($this->login == null && $request->controller() != 'Login'){
+				$this->redirect('./login');
+			}
 		}
 	}
  ?>
