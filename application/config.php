@@ -208,6 +208,10 @@ return [
         'var_session_id' => '',
         // SESSION 前缀
         'prefix'         => 'think',
+        // SESSION 保存目录
+        // 'path'           => '\session\tmp_s',
+        // SESSION 过期时间（1小时）
+        'expire'         => 3600,
         // 驱动方式 支持redis memcache memcached
         'type'           => '',
         // 是否自动开启 SESSION
