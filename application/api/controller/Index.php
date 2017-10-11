@@ -9,8 +9,7 @@
 		
 		function index()
 		{
-			$banner = model('index')->getBanner();
-			$this->assign('banner',$banner);
+			echo "2222222222";
 		}
 	}
 ?>

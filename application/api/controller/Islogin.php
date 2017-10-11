@@ -10,6 +10,7 @@
 	{
 		function __construct()
 		{
+
 			parent::__construct();
 			$ses_user = Session::get('user');
 			if(isset($ses_user)){
