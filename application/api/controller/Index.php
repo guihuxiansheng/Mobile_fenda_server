@@ -1,15 +1,15 @@
 <?php
 	namespace app\api\controller;
-
+	use \think\Controller;
 	/**
 	* 
 	*/
-	class Index extends Islogin
+	class Index extends Controller
 	{
 		
 		function index()
 		{
-			echo "2222222222";
+
 		}
 	}
 ?>

@@ -8,14 +8,14 @@
 	*/
 	class Islogin extends Controller
 	{
+		protected $login;
 		function __construct()
 		{
 
 			parent::__construct();
-			$ses_user = Session::get('user');
-			if(isset($ses_user)){
-				$user = db('user')->where(['id'=>$ses_user])->find();
-				$this->assign('user',$user);
+			$this->login = Session::get('user');
+			if($_SERVER['REQUEST_METHOD'] == 'OPTIONS'){
+			    exit;
 			}
 		}
 	}

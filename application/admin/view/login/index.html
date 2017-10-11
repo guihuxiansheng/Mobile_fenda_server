@@ -1,0 +1,65 @@
+{include file='public/head'}
+<link rel="stylesheet" type="text/css" href="__STATIC_PATH__/static/admin/login/index.css?tfg">
+<div class="login">
+	<div class="form-head">分答后台登录</div>
+	<form id="login" novalidate>
+		<div class="form-group">
+		    <label for="exampleInputEmail1">用户名</label>
+		    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="请输入账号" maxlength="25" name="admin_user" required>
+		    <div id="userHelp" class="form-text">账号不能为空！</div>
+		</div>
+		<div class="form-group">
+			<label for="exampleInputPassword1">密码</label>
+			<input type="password" class="form-control" id="exampleInputPassword1" placeholder="请输入密码" minlength="5" name="password" required>
+			<div id="pwdHelp" class="form-text">密码不能为空！</div>
+		</div>
+		<button type="button" class="submit btn btn-primary">登录</button>
+	</form>
+</div>
+<script type="text/javascript" src="__STATIC_PATH__/static/library/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="__STATIC_PATH__/static/library/popper.js"></script>
+<script type="text/javascript" src="__STATIC_PATH__/static/library/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		var form = document.getElementById('login');
+		$('.login form button.submit').click(function(){
+			if (form.checkValidity() == true) {
+		    	$.ajax({
+					url: "{:url('/admin/login/login')}",
+					method: 'POST',
+					data: {
+						'admin': $(form).find('input[name="admin_user"]').val(),
+						'pwd': $(form).find('input[name="password"]').val()
+					},
+					success: function(data){
+						if(data.status == 0){
+							window.location.href = "{:url('/admin/index')}";
+						}else{
+							alert(data.message);
+						}
+					},
+					error: function(data){
+						if(data.status == '404'){
+						}else if(data.status == '500'){
+						}else{
+							form.classList.add("was-validated");
+						}
+					}
+				})
+		    }else{
+		    	$(form).find('.form-text').addClass('invalid-feedback');
+		    	form.classList.add("was-validated");
+		    }
+		});
+		$('.login form input').on('input propertychange',function(){
+			if($(this).val == ''){
+				$(this).siblings('.form-text').addClass('invalid-feedback');
+			}else{
+				$(this).siblings('.form-text').removeClass('invalid-feedback');
+			}
+			form.classList.add("was-validated");
+		})
+	})
+</script>
+</body>
+</html>
