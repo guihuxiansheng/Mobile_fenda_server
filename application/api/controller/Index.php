@@ -1,16 +1,15 @@
 <?php
 	namespace app\api\controller;
-
+	use \think\Controller;
 	/**
 	* 
 	*/
-	class Index extends Islogin
+	class Index extends Controller
 	{
 		
 		function index()
 		{
-			$banner = model('index')->getBanner();
-			$this->assign('banner',$banner);
+			
 		}
 	}
 ?>
