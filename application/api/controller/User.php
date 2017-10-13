@@ -1,6 +1,7 @@
 <?php 
 	namespace app\api\controller;
 	use \think\Session;
+	use app\api\common\Common;
 	/**
 	* 
 	*/
@@ -45,76 +46,30 @@
 			}
 		}
 		function phone(){
-			if(empty(input('phone'))){
-				return json([
-					'status' => 1,
-					'message' => '号码不正确！'
-				]);
-			}
-			if(preg_match_all('/^1[34578]\d{9}$/', input('phone'))){
-				model('User')->phoneVerify(rand(100000,1000000),$this->login['id'],input('phone'));
-				return json([
-					'status' => 0,
-					'message' => '发送成功！'
-				]);
-			}else{
-				return json([
-					'status' => 1,
-					'message' => '号码不正确！'
-				]);
-			}
+			return json(Common::create_phoneCode($this->login['id'],input('phone')));
 		}
 		function checkCode(){
 			$code = input('code');
-			if(empty($code)){
-				return json([
-					'status' => 1,
-					'message' => '手机验证码不正确！'
-				]);
-			}
-			$db_code = model('User')->getCode($this->login['id']);
-			if(!empty($db_code) && $db_code['code'] == $code){
-				return json([
-					'status' => 0,
-					'message' => '手机验证码正确'
-				]);
-			}else{
-				return json([
-					'status' => 1,
-					'message' => '手机验证码错误！'
-				]);
-			}
+			return json(Common::check_phoneCode($this->login['id'], $this->login['phone_number'], $code));
 		}
 		function changePhone(){
 			$phone = input('phone');
 			$code = input('code');
-			if(preg_match_all('/^1[34578]\d{9}$/', $phone)){
-				if(strlen($code) !== 6){
+			$result = Common::check_phoneCode($this->login['id'], $phone, $code);
+			if($result['status'] === 0){
+				if(model('User')->changePhone($this->login['id'],$phone)){
 					return json([
-						'status' => 1,
-						'message' => '验证码错误！'
-					]);
-				}
-				$phone_check = model('User')->getCode($this->login['id']);
-				if(!empty($phone_check) && $phone_check['code'] == $code && $phone_check['phone'] == $phone){
-					if(model('User')->changePhone()){
-						return json([
-							'status' => 0,
-							'message' => '更改成功！'
-						]);
-					}
-					return json([
-						'status' => 1,
-						'message' => '更改失败！'
+						'status' => 0,
+						'message' => '更改成功！'
 					]);
 				}else{
 					return json([
 						'status' => 1,
-						'message' => '信息错误！'
+						'message' => '更改失败！'
 					]);
 				}
 			}else{
-
+				return json($result);
 			}
 		}
 	}

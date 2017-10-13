@@ -5,16 +5,15 @@
 	*/
 	class User extends \think\Model
 	{
-		function phoneVerify($code,$id,$phone){
-			db('captcha')->where(['uid'=>$id])->delete();
-			db('captcha')->insert(['uid'=>$id,'code'=>$code],'phone'=>$phone);
-		}
-		function getCode($id){
-			return db('captcha')->where(['uid'=>$id])->find();
-		}
+		/**
+		 * [changePhone  保存修改的手机号]
+		 * @param  [string] $id    [用户id]
+		 * @param  [string] $phone [手机号]
+		 * @return [boolean]        [保存成功为true]
+		 */
 		function changePhone($id,$phone){
 			try{
-				db('user')->where(['id'=>$id])->update(['phone'=>$phone]);
+				db('user')->where(['id'=>$id])->update(['phone_number'=>$phone]);
 				return true;
 			}catch(\Exception $e){
 				return false;
