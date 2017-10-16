@@ -45,12 +45,6 @@
 		 * @return [obj]        [生成结果]
 		 */
 		public static function create_phoneCode($id,$phone){
-		 	if(empty($phone)){
-				return [
-					'status' => 1,
-					'message' => '号码错误！'
-				];
-			}
 			if(preg_match_all('/^1[34578]\d{9}$/', $phone)){
 				self::phoneVerify(rand(100000,1000000),$id,$phone);
 				return [
@@ -79,7 +73,7 @@
 						'message' => '验证码错误！'
 					];
 				}
-				$phone_check = self::getCode($id);
+				$phone_check = self::getCode($phone);
 				if(!empty($phone_check) && $phone_check['uid'] ===$id && $phone_check['code'] == $code && $phone_check['phone'] == $phone){
 					return [
 						'status' => 0,
@@ -98,13 +92,25 @@
 				];
 			}
 		}
+		public static function findUser($phone){
+			try{
+				$db_find = db('user')->where(['phone_number'=>$phone])->find();
+				if(empty($db_find)){
+					return false;
+				}else{
+					return $db_find;
+				}
+			}catch(\Exception $e){
+				return false;
+			}
+		}
 		/**
 		 * [getCode 获取数据库的验证码数据]
 		 * @param  [string] $id [用户id]
 		 * @return [obj]     [查询结果]
 		 */
-		private static function getCode($id){
-			return db('captcha')->where(['uid'=>$id])->find();
+		private static function getCode($phone){
+			return db('captcha')->where(['phone'=>$phone])->find();
 		}
 		/**
 		 * [phoneVerify 保存验证码到数据库]
@@ -113,7 +119,7 @@
 		 * @param  [string] $phone [手机号]
 		 */
 		private static function phoneVerify($code,$id,$phone){
-			db('captcha')->where(['uid'=>$id])->delete();
+			db('captcha')->where(['phone'=>$phone])->delete();
 			db('captcha')->insert(['uid'=>$id,'code'=>$code,'phone'=>$phone]);
 		}
 	}

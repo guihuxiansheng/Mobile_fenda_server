@@ -24,11 +24,13 @@
 			$file_pic = request()->file('image');
 			$info = $file_pic->validate(['size'=>1048576,'ext'=>'jpeg,jpg,png,gif'])->move('uploads');
 			if($info){
-				Session::set('image','uploads'.DS.$info->getExtension());
+				$path = $info->getSaveName();
+				Session::set('image','uploads'.DS.$path);
 
 				return json([
 					'status'=>0,
-					'message'=> '上传成功！'
+					'message'=> '上传成功！',
+					'src' => 'uploads'.DS.$path
 				]);
 			}else{
 				return json([
@@ -36,7 +38,6 @@
 					'message'=> $file_pic->getError()
 				]);
 			}
-			
 		}
 		function verify(){
 			if(empty(input('id'))){
@@ -70,6 +71,45 @@
 				}
 			}else{
 				return json($result);
+			}
+		}
+		// 修改个人资料
+		function saveProfile(){
+			$rule = [
+			    'title'  => 'require|max:18',
+			    'nickname'   => 'require|max:16',
+			    'problem' => 'require',
+			    'money' => 'require|number| min:0.01 | max:1000 | regex:^d.d{2}'
+			];
+
+			$msg = [
+			    'title.require' => '头衔不能为空',
+			    'title.max' => '头衔不能超过18个字符',
+			    'nickname.require'     => '昵称不能为空',
+			    'nickname.max'   => '昵称不能超过16个字符',
+			    'problem.require'   => '问题不能为空',
+			    'money.require'   => '金额不能为空',
+			    'money.number'   => '金额必须为数字',
+			    'money.min'   => '金额必须≥0.01',
+			    'money.max'   => '金额必须≤1000',
+			    'money.regex'   => '金额必须为两位小数'
+			];
+			$data = [
+				'title'  => input('title'),
+			    'nickname'   => input('nickname'),
+			    'problem' => input('problem'),
+			    'money' => input('money'),
+			    'head_pic' => Session::get('image')
+			];
+			$validate = new Validate($rule, $msg);
+			$result   = $validate->check($data,$this->login['id']);
+			if($result){
+				model('User')->saveProfile($data);
+			}else{
+				return json([
+					'status'=> 0,
+					'message'=> $validate->getError()
+				]);
 			}
 		}
 	}

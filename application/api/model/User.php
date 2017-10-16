@@ -19,6 +19,32 @@
 				return false;
 			}
 		}
+		function saveProfile($data,$id){
+			$up_data = Array(
+				'user.user_name'=>$data['nickname'],
+				'user.whether' => true,
+				'expert.rank' => $data['title'],
+				'expert.begoodat' => $data['problem'],
+				'expert.worth' => $data['money']
+			);
+			if(!empty($data['head_pic'])){
+				$up_data['user.head_pic'] = $data['head_pic'];
+			}
+			try{
+				$this->table('user,expert')->where([
+					'user.id'=>$id,
+					'expert.uid'=>'user.id'
+				]).update($up_data);
+			}catch(\Exception $e){
+
+			}
+		}
+		/**
+		 * [getPhoneCode 发送手机验证码]
+		 * @param  [string] $phone [手机号码]
+		 * @param  [string] $code  [需要发送的验证码]
+		 * @return [obj]        [发送状态]
+		 */
 		function getPhoneCode($phone,$code){
 			$host = "http://sms.market.alicloudapi.com";
 		    $path = "/singleSendSms";
