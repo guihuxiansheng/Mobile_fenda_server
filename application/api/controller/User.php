@@ -2,6 +2,7 @@
 	namespace app\api\controller;
 	use \think\Session;
 	use app\api\common\Common;
+	use \think\Validate;
 	/**
 	* 
 	*/
@@ -75,13 +76,13 @@
 		}
 		// 修改个人资料
 		function saveProfile(){
+			$money = input('money');
 			$rule = [
 			    'title'  => 'require|max:18',
 			    'nickname'   => 'require|max:16',
 			    'problem' => 'require',
-			    'money' => 'require|number| min:0.01 | max:1000 | regex:^d.d{2}'
+			    'money' => 'require|number|min:0.01|max:1000|regex:^[0-9]{0,3}(.[0-9]{1,2})?$'
 			];
-
 			$msg = [
 			    'title.require' => '头衔不能为空',
 			    'title.max' => '头衔不能超过18个字符',
@@ -98,19 +99,32 @@
 				'title'  => input('title'),
 			    'nickname'   => input('nickname'),
 			    'problem' => input('problem'),
-			    'money' => input('money'),
-			    'head_pic' => Session::get('image')
+			    'money' => $money
 			];
 			$validate = new Validate($rule, $msg);
-			$result   = $validate->check($data,$this->login['id']);
+			$result   = $validate->check($data);
 			if($result){
-				model('User')->saveProfile($data);
+				$data['head_pic'] = Session::get('image');
+				$db_result = model('User')->saveProfile($data, $this->login['id']);
+				if($db_result){
+					return json([
+						'status'=> 0,
+						'message' => '保存成功！'
+					]);
+				}
+				return json([
+					'status'=> 1,
+					'message' => '保存失败！'
+				]);
 			}else{
 				return json([
-					'status'=> 0,
+					'status'=> 1,
 					'message'=> $validate->getError()
 				]);
 			}
+		}
+		function getExpert(){
+			return json(model('user')->getExpert($this->login['id']));
 		}
 	}
  ?>

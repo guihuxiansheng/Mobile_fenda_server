@@ -1,5 +1,6 @@
 <?php 
 	namespace app\api\model;
+	use \think\Session;
 	/**
 	* 
 	*/
@@ -30,13 +31,29 @@
 			if(!empty($data['head_pic'])){
 				$up_data['user.head_pic'] = $data['head_pic'];
 			}
+			$expert = self::getExpert($id);
+			if(empty($expert)){
+				$this->table('fd_expert')->insert([
+					'rank'=>$data['title'],
+					'worth' => $data['money'],
+					'begoodat' => $data['problem'],
+					'user_id' => $id
+				]);
+			}
 			try{
-				$this->table('user,expert')->where([
+				$this->table('fd_user user,fd_expert expert')->where([
 					'user.id'=>$id,
-					'expert.uid'=>'user.id'
-				]).update($up_data);
+					'expert.user_id'=>$id
+				])->update($up_data);
+				$user = db('user')->where(['id'=>$id])->find();
+				if(!empty($user)){
+					Session::set('user',$user);
+				}else{
+					Session::delete('user');
+				}
+				return true;
 			}catch(\Exception $e){
-
+				return false;
 			}
 		}
 		/**
@@ -72,6 +89,9 @@
 		        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
 		    }
 		    return curl_exec($curl);
+		}
+		function getExpert($id){
+			return db('expert')->where(['user_id' => $id])->find();
 		}
 	}
  ?>

@@ -38,7 +38,6 @@
 					return json($check_code);
 				}
 			}
-			unset($db_user['user_pwd']);
 			Session::set('user',$db_user);
 			return json([
 				'status'=> 0,
