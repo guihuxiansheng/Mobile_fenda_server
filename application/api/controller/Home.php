@@ -12,6 +12,7 @@
 			$head_list=db("headline")
 				->alias('h')
 				->join("expert e","e.id=h.expert_id")
+				->limit(3)
 				->select();
 				return json($head_list);
 		}
