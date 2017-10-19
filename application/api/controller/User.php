@@ -23,22 +23,34 @@
 		}
 		function upload(){
 			$file_pic = request()->file('image');
-			$info = $file_pic->validate(['size'=>1048576,'ext'=>'jpeg,jpg,png,gif'])->move('uploads');
-			if($info){
-				$path = $info->getSaveName();
-				Session::set('image','uploads'.DS.$path);
+			if(!empty($file_pic)){
+				$info = $file_pic->validate(['size'=>1048576,'ext'=>'jpeg,jpg,png,gif'])->move('uploads');
+				if($info){
+					$path = $info->getSaveName();
+					Session::set('image','uploads'.DS.$path);
 
-				return json([
-					'status'=>0,
-					'message'=> '上传成功！',
-					'src' => 'uploads'.DS.$path
-				]);
+					return json_encode([
+						'status'=>0,
+						'message'=> '上传成功！',
+						'src' => 'uploads'.DS.$path
+					]);
+				}else{
+					return json_encode([
+						'status'=>2,
+						'message'=> $file_pic->getError()
+					]);
+				}
 			}else{
-				return json([
-					'status'=>2,
-					'message'=> $file_pic->getError()
+				return json_encode([
+					'status'=>1,
+					'message'=> '请上传图片'
 				]);
 			}
+		}
+		function uploadProfile(){
+			$result = json_decode(self::upload(),true);
+			return $result['message'];
+
 		}
 		function verify(){
 			if(empty(input('id'))){
