@@ -29,5 +29,26 @@
 				->select();
 				return json($expert_list);
 		}
+		function  top()
+		{
+			$expert_list=db("expert")
+				->alias("e")
+				->join("answeraudio a","a.id=e.answeraudio_id")
+				->join("problem p","p.id=a.problem_id")
+				->order("p.number desc")
+				->limit(5)
+				->select();
+				return json($expert_list);
+		}
+		function  onetoone()
+		{
+			$one_list=db("expert")
+				->alias("e")
+				->join("answeraudio a","a.id=e.answeraudio_id")
+				->join("problem p","p.id=a.problem_id")
+				->limit(5)
+				->select();
+				return json($one_list);
+		}
 	}
  ?>
