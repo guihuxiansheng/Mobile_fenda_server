@@ -20,7 +20,7 @@
 
 		function search(){
 			$query=input();
-			$search=db("exptaudio")
+			$search=db("answeraudio")
 					->alias("e")
 					->join("expert p","e.expert_id=p.id")
 					->where(['p.expert_name'=>['like',$query['query'],'%']])
@@ -41,7 +41,7 @@
 			$seach_one['data'] = $search;
 			$total[] = $seach_one;
 
-			$search=db("exptaudio")
+			$search=db("answeraudio")
 			->alias("e")
 			->join("expert p","e.expert_id=p.id")
 			->where(['p.expert_name'=>['like',$query['query'],'%']])	
