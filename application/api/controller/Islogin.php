@@ -11,6 +11,7 @@
 		protected $login;
 		function __construct()
 		{
+
 			parent::__construct();
 			$this->login = Session::get('user');
 			if($_SERVER['REQUEST_METHOD'] == 'OPTIONS'){
