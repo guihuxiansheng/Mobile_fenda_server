@@ -1,4 +1,10 @@
 <link rel="stylesheet" type="text/css" href="__STATIC_PATH__/static/admin/public/header.css">
+<script type="text/javascript" src="__STATIC_PATH__/static/library/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="__STATIC_PATH__/static/library/popper.js"></script>
+<script type="text/javascript" src="__STATIC_PATH__/static/library/bootstrap/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="__STATIC_PATH__/static/admin/index/index.css?a321sd">
+
+
 <div class="content-menu">
 	<div class="logo">
 		<i class="ion-ios-paperplane"></i>
@@ -8,28 +14,45 @@
 		<ul class="nav navbar-nav">
 			<li class="nav-item active">
 				<a data-toggle="collapse" href="#collapse-index" aria-expanded="false">
-					<span class="ion-home"></span>首页管理<i class="ion-ios-arrow-down"></i>
+					<span class="ion-android-person"></span>用户管理<i class="ion-ios-arrow-down"></i>
 					</a>
 					<div class="collapse" id="collapse-index">
 						<ul class="nav navbar-nav">
 							<li>
-								<a href="">首页轮播图</a>
-								<a href="">首页轮播图</a>
-								<a href="">首页轮播图</a>
-								<a href="">首页轮播图</a>
-								<a href="">首页轮播图</a>
+								<a href="{:url('user/index')}">普通用户</a>
+								<a href="{:url('classification/index')}">答主分类</a>
+								<a href="{:url('expert/index')}">答主</a>
+							</li>
+						</ul>
+				</div>
+			</li>
+			<li class="nav-item">
+				<a data-toggle="collapse" href="#collapse-index2" aria-expanded="false">
+					<span class="ion-help-circled"></span>快问管理<i class="ion-ios-arrow-down"></i>
+					</a>
+					<div class="collapse" id="collapse-index2">
+						<ul class="nav navbar-nav">
+							<li>
+								<a href="{:url('kwcate/index')}">快问分类</a>
+								<a href="{:url('kwproblem/index')}">快问问题</a>
+								<a href="{:url('kwansweraudio/index')}">快问回答音频</a>
+								<a href="{:url('kwanswertext/index')}">快问回答文本</a>
 							</li>
 						</ul>
 				</div>
 			</li>
 			<li class="nav-item">
 				<a data-toggle="collapse" href="#collapse-index1" aria-expanded="false">
-					<span class="ion-gear-b"></span>系统设置<i class="ion-ios-arrow-down"></i>
+					<span class="ion-volume-high"></span>小讲管理<i class="ion-ios-arrow-down"></i>
 					</a>
 					<div class="collapse" id="collapse-index1">
 						<ul class="nav navbar-nav">
 							<li>
-								<a href="">首页轮播图</a>
+								<a href="{:url('categorys/index')}">小讲分类</a>
+								<a href="{:url('course/index')}">小讲课程详情</a>
+								<a href="{:url('specialtopic/index')}">小讲专题详情</a>
+								<a href="{:url('single/index')}">讲单标题</a>
+								<a href="{:url('audio/index')}">讲单音频</a>
 							</li>
 						</ul>
 				</div>
@@ -37,7 +60,7 @@
         </ul>
 	</div>
 </div>
-<div class="content container-fluit">
+<div class="content container-fluid" id="container-fluid">
 	<div class="top-menu">
 		<div class="menu-left">
 			<i class="ion-navicon-round"></i>
@@ -64,3 +87,11 @@
 
 		</div>
 	</div>	
+
+
+<script>
+	//头像弹出
+    $(".dropdown-toggle").on("click",function(){
+        $(".dropdown-menu").toggle();
+    })
+</script>

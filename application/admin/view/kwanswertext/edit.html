@@ -1,0 +1,32 @@
+{include file='public/head'}
+{include file='public/header'}
+<div class="container mt-3">
+    <h2 id="container-title">编辑快问回答音频</h2>
+    <form action="{:url('update')}" method="post">
+        <div class="form-group">
+            <label>回答的内容</label>
+            <input  type="text" class="form-control" value="{$info.content}" name="content">
+        </div>
+        <div class="form-group">
+            <label>点赞数</label>
+            <input disabled type="text" class="form-control" value="{$info.point_number}" name="point_number">
+        </div>
+        <div class="form-group">
+            <label>创建时间</label>
+            <input disabled type="text" class="form-control" value="{$info.create_time}" name="create_time">
+        </div>
+        <div class="form-group">
+            <label>给出回答的专家</label>
+            <input disabled type="text" class="form-control" value="{$info.expert_id}" name="expert_id">
+        </div>
+        <div class="form-group">
+            <label>被回答的问题</label>
+            <input disabled type="text" class="form-control" value="{$info.kwproblem_id}" name="kwproblem_id">
+        </div>
+        <div class="form-group">
+            <input type="hidden" name="id" value="{$info.id}">
+            <input type="submit" value="保存" class="btn btn-info">
+        </div>
+    </form>
+</div>
+{include file='public/footer'}

@@ -1,0 +1,159 @@
+{include file='public/head'}
+{include file='public/header'}
+<div class="" id="container-warp">
+    <h2 class="" id="container-title">讲单音频</h2>
+    <div class="">
+        <form action="{:url('search')}" id="form-top" class="form-inline">
+            <div class="btn btn-primary mb-2 form-group" style="visibility:hidden;" onclick="window.location.href='{:url('add')}';return false">添加</div>
+            <div class="form-group" id="searchbox">
+                <label>选择搜索字段</label>
+                <select name="searchkey">
+                        <option value="">请选择</option>
+                        <option value="name">音频名称</option>
+                        <option value="try">能否试听</option>
+                        <option value="courseid">所属课程id</option>
+                </select>
+                <input disabled="" name="searchtext" type="text" class="form-control" id="search-text">
+                <input disabled="" style="cursor: default;" type="submit" class="btn btn-info" id="search-btn" value="搜索">
+            </div>
+        </form>
+    </div>
+    <!-- 内容列表 -->
+    <table class="table table-striped table-bordered table-hover">
+        <tr>
+            <th>ID</th>
+            <th>创建时间</th>
+            <th>音频路径</th>
+            <th>音频名称</th>
+            <th>音频时间</th>
+            <th>能否试听</th>
+            <th>所属课程id</th>
+            <th>所属标题等级</th>
+            <!-- <th>操作</th> -->
+        </tr>
+        {foreach $info as $value}
+        <tr>
+            <td>{$value.id}</td>
+            <td>{$value.create_time}</td>
+            <td>{$value.path}</td>
+            <td>{$value.name}</td>
+            <td>{$value.time}</td>
+            <td>{$value.try}</td>
+            <td>{$value.courseid}</td>
+            <td>{$value.grade}</td>
+<!--             <td>
+                <a href="{:url('edit',['id'=>$value['id']])}" class="btn btn-info">编辑</a>
+                <div class='btn btn-danger font_white' id="delete-btn"  onclick='category.showModel({$value.id})'>删除</div>
+            </td> -->
+        </tr>
+		{/foreach}
+    </table>
+
+    <div>{$info->render()}</div>
+</div>
+<?php
+    var_dump($_SERVER['QUERY_STRING']);
+?>
+
+<!-- 隐藏的模态框 -->
+<div class="modal" id="myModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">确认删除这条信息吗</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>删除将不可回退.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="category.deleteInfo()">确认</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- 用来提示的模态框 -->
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">删除成功</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body" id="toast-info">
+        删除成功
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary"  data-dismiss="modal" onclick="window.location.href='{:url('index')}';return false">确认</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+    //点击删除按钮
+    window.category = {
+        id:'',
+        showModel:function(id) {
+            this.id = id
+             $('#myModal').modal("show")
+        },
+        deleteInfo: function() {
+          console.log(1);
+            // $.get("category_api.php",{
+            //     id:this.id,
+            //     api_type:'delete'
+            // },function  (rtnData) {
+            //      location.reload();
+            // })
+            $.ajax({
+               type: "POST",
+               url: "{:url('delete')}",
+               data: {
+                    id:this.id
+               },
+               success: function(msg){
+                setTimeout(function(){location.reload()},3000);
+                $('#myModal').modal("hide");
+                $('#toast-info').html("删除了："+msg.successmessage);
+                $('#myModal1').modal("show");
+                // console.log(msg);
+               }
+            });
+        }
+    }
+
+
+    //设置模态框垂直居中
+    centerModals();
+    function centerModals() {   
+    　　$('#myModal').each(function(i) {   
+    　　　　var $clone = $(this).clone().css('display','block').appendTo('body');
+    　　　　var top = Math.round(($clone.height() - $clone.find('.modal-content').height()) / 2);
+    　　　　top = top > 0 ? top : 0;   
+    　　　　$clone.remove();   
+    　　　　$(this).find('.modal-content').css("margin-top", top);   
+    　　});   
+    };
+ 
+    //搜索按钮是否可点击
+    $("#searchbox select").on("click",function(){
+        if($("#searchbox select option:selected").val()==""){
+            $("#searchbox #search-btn").attr("disabled",'disabled').css("cursor","default");
+            $("#searchbox #search-text").attr("disabled",'disabled')
+        }else{
+            $("#searchbox #search-btn").removeAttr("disabled").css("cursor","pointer");
+            $("#searchbox #search-text").removeAttr("disabled");
+        }
+    })
+</script>
+
+
+{include file='public/footer'}

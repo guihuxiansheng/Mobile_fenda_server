@@ -1,0 +1,44 @@
+{include file='public/head'}
+{include file='public/header'}
+<div class="container mt-3">
+    <h2 id="container-title">编辑快问回答音频</h2>
+    <form action="{:url('update')}" method="post">
+        <div class="form-group">
+            <label>音频名称</label>
+            <input  type="text" class="form-control" value="{$info.name}" name="name">
+        </div>
+        <div class="form-group">
+            <label>音频存储路径</label>
+            <input disabled type="text" class="form-control" value="{$info.path}" name="path">
+        </div>
+        <div class="form-group">
+            <label>听过的人数</label>
+            <input disabled type="text" class="form-control" value="{$info.number}" name="number">
+        </div>
+        <div class="form-group">
+            <label>点赞的人数</label>
+            <input disabled type="text" class="form-control" value="{$info.point_number}" name="point_number">
+        </div>
+        <div class="form-group">
+            <label>0 是免费听，1 是1元偷偷听</label>
+            <input  type="text" class="form-control" value="{$info.status}" name="status">
+        </div>
+        <div class="form-group">
+            <label>创建时间</label>
+            <input disabled type="text" class="form-control" value="{$info.create_time}" name="create_time">
+        </div>
+        <div class="form-group">
+            <label>发表音频的专家（或答主）的id</label>
+            <input disabled type="text" class="form-control" value="{$info.expert_id}" name="expert_id">
+        </div>
+        <div class="form-group">
+            <label>对应回答的问题的id</label>
+            <input disabled type="text" class="form-control" value="{$info.kwproblem_id}" name="kwproblem_id">
+        </div>
+        <div class="form-group">
+            <input type="hidden" name="id" value="{$info.id}">
+            <input type="submit" value="保存" class="btn btn-info">
+        </div>
+    </form>
+</div>
+{include file='public/footer'}

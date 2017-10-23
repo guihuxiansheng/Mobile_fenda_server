@@ -24,7 +24,7 @@
 		function upload(){
 			$file_pic = request()->file('image');
 			if(!empty($file_pic)){
-				$info = $file_pic->validate(['size'=>1048576,'ext'=>'jpeg,jpg,png,gif'])->move('uploads');
+				$info = $file_pic->validate(['ext'=>'jpeg,jpg,png,gif'])->move('uploads');//'size'=>1048576,
 				if($info){
 					$path = $info->getSaveName();
 					Session::set('image','uploads'.DS.$path);
@@ -47,16 +47,32 @@
 				]);
 			}
 		}
-		function uploadProfile(){
-			$result = json_decode(self::upload(),true);
-			return $result['message'];
-
-		}
+		// function uploadProfile(){
+		// 	$result = json_decode(self::upload(),true);
+		// 	return $result['message'];
+		// }
 		function verify(){
 			if(empty(input('id'))){
 				return Common::create_verify();
 			}else{
 				return Common::create_verify(input('id'));
+			}
+		}
+		function userCheckPhone(){
+			if($this->login['phone_number'] === input('phone')){
+				return json([
+					'status'=> 1,
+					'message'=> '该号码已绑定该账号'
+				]);
+			}
+			$user = Common::user_exit(input('phone'));
+			if(!$user){
+				return json(Common::create_phoneCode($this->login['id'],input('phone')));
+			}else{
+				return json([
+					'status'=> 2,
+					'message'=> '该号码已绑定其他账号'
+				]);
 			}
 		}
 		function phone(){
@@ -69,6 +85,13 @@
 		function changePhone(){
 			$phone = input('phone');
 			$code = input('code');
+			$user = Common::user_exit(input('phone'));
+			if($user){
+				return json([
+					'status'=> 1,
+					'message'=> '更改失败，该手机号已绑定账号！'
+				]);
+			}
 			$result = Common::check_phoneCode($this->login['id'], $phone, $code);
 			if($result['status'] === 0){
 				if(model('User')->changePhone($this->login['id'],$phone)){

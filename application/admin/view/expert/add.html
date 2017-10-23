@@ -1,0 +1,40 @@
+{include file='public/head'}
+{include file='public/header'}
+<div class="container mt-3">
+    <h2 id="container-title">添加答主</h2>
+     <form action="{:url('insert')}" method="post">
+        <div class="form-group">
+            <label>答主名</label>
+            <input type="text" class="form-control"  name="expert_name">
+        </div>
+        <div class="form-group">
+            <label>简介</label>
+            <input type="text" class="form-control"  name="introduction">
+        </div>
+        <div class="form-group">
+            <label>分类ID</label>
+            <input type="text" class="form-control"  name="classification_id">
+        </div>
+        <div class="form-group">
+            <label>擅长问题</label>
+            <input type="text" class="form-control"  name="begoodat">
+        </div>
+        <div class="form-group">
+            <label>头衔</label>
+            <input type="text" class="form-control"  name="rank">
+        </div>
+        <div class="form-group">
+            <label>身价</label>
+            <input type="text" class="form-control"  name="worth">
+        </div>
+        <div class="form-group">
+            <label>所属用户ID</label>
+            <input type="text" class="form-control"  name="user_id">
+        </div>
+        <div class="form-group">
+            <input type="submit" value="插入" class="btn btn-info">
+        </div>
+    </form>
+     
+</div>
+{include file='public/footer'}

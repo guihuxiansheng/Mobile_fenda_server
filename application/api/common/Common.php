@@ -46,10 +46,16 @@
 		 */
 		public static function create_phoneCode($id,$phone){
 			if(preg_match_all('/^1[34578]\d{9}$/', $phone)){
-				self::phoneVerify(rand(100000,1000000),$id,$phone);
+				$state = self::phoneVerify(rand(100000,1000000),$id,$phone);
+				if($state){
+					return [
+						'status' => 0,
+						'message' => '发送成功！'
+					];
+				}
 				return [
-					'status' => 0,
-					'message' => '发送成功！'
+					'status' => 1,
+					'message' => '请勿频繁发送！'
 				];
 			}else{
 				return [
@@ -67,22 +73,30 @@
 		 */
 		public static function check_phoneCode($id, $phone, $code){
 		 	if(preg_match_all('/^1[34578]\d{9}$/', $phone)){
-				if(strlen($code) !== 6){
+				if(strlen($code) !== 6 || empty($code)){
 					return [
 						'status' => 1,
-						'message' => '验证码错误！'
+						'message' => '手机验证码错误！'
 					];
 				}
 				$phone_check = self::getCode($phone);
 				if(!empty($phone_check) && $phone_check['uid'] ===$id && $phone_check['code'] == $code && $phone_check['phone'] == $phone){
-					return [
-						'status' => 0,
-						'message' => '发送成功！'
-					];
+					db('captcha')->where(['phone'=>$phone])->delete();
+					if(time() - $phone_check['create_time'] > 5*60){
+						return [
+							'status' => 1,
+							'message' => '手机验证码错误！'
+						];
+					}else{
+						return [
+							'status' => 0,
+							'message' => '验证成功！'
+						];
+					}
 				}else{
 					return [
 						'status' => 1,
-						'message' => '信息错误！'
+						'message' => '手机验证码错误！'
 					];
 				}
 			}else{
@@ -92,6 +106,11 @@
 				];
 			}
 		}
+		/**
+		 * [findUser 查找用户]
+		 * @param  [type] $phone [手机号]
+		 * @return [type]        [返回false或用户信息]
+		 */
 		public static function findUser($phone){
 			try{
 				$db_find = db('user')->where(['phone_number'=>$phone])->find();
@@ -102,6 +121,14 @@
 				}
 			}catch(\Exception $e){
 				return false;
+			}
+		}
+		public static function user_exit($phone){
+			$user = self::findUser($phone);
+			if(empty($user)){
+				return false;
+			}else{
+				return true;
 			}
 		}
 		/**
@@ -119,8 +146,17 @@
 		 * @param  [string] $phone [手机号]
 		 */
 		private static function phoneVerify($code,$id,$phone){
-			db('captcha')->where(['phone'=>$phone])->delete();
-			db('captcha')->insert(['uid'=>$id,'code'=>$code,'phone'=>$phone]);
+			try{
+				$phone_check = self::getCode($phone);
+				if(!empty($phone_check) && time() - $phone_check['create_time'] < 5*60 ){
+					return false;
+				}
+				db('captcha')->where(['phone'=>$phone])->delete();
+				db('captcha')->insert(['uid'=>$id,'code'=>$code,'phone'=>$phone,'create_time' => time()]);
+				return true;
+			}catch(\Exception $e){
+				return false;
+			}
 		}
 	}
  ?>
