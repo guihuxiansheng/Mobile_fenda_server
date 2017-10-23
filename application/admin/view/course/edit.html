@@ -1,0 +1,44 @@
+{include file='public/head'}
+{include file='public/header'}
+<div class="container mt-3">
+    <h2 id="container-title">编辑小讲课程</h2>
+    <form action="{:url('update')}" method="post">
+        <div class="form-group">
+            <label>课程名称</label>
+            <input  type="text" class="form-control" value="{$info.courseName}" name="courseName">
+        </div>
+        <div class="form-group">
+            <label>专家ID</label>
+            <input disabled type="text" class="form-control" value="{$info.expert_id}" name="expert_id">
+        </div>
+        <div class="form-group">
+            <label>所属专题ID</label>
+            <input disabled type="text" class="form-control" value="{$info.special_id}" name="special_id">
+        </div>
+        <div class="form-group">
+            <label>简介</label>
+            <input disabled type="text" class="form-control" value="{$info.summary}" name="summary">
+        </div>
+        <div class="form-group">
+            <label>价钱</label>
+            <input  type="text" class="form-control" value="{$info.price}" name="price">
+        </div>
+        <div class="form-group">
+            <label>参加人数</label>
+            <input disabled type="text" class="form-control" value="{$info.num}" name="num">
+        </div>
+        <div class="form-group">
+            <label>所属分类id</label>
+            <input disabled type="text" class="form-control" value="{$info.categroies_id}" name="categroies_id">
+        </div>
+        <div class="form-group">
+            <label>讲单id</label>
+            <input disabled type="text" class="form-control" value="{$info.singleid}" name="singleid">
+        </div>
+        <div class="form-group">
+            <input type="hidden" name="id" value="{$info.id}">
+            <input type="submit" value="保存" class="btn btn-info">
+        </div>
+    </form>
+</div>
+{include file='public/footer'}
