@@ -1,0 +1,36 @@
+{include file='public/head'}
+{include file='public/header'}
+<div class="container mt-3">
+    <h2 id="container-title">编辑讲单音频</h2>
+    <form action="{:url('update')}" method="post">
+        <div class="form-group">
+            <label>音频路径</label>
+            <input  type="text" class="form-control" value="{$info.path}" name="path">
+        </div>
+        <div class="form-group">
+            <label>音频名称</label>
+            <input disabled type="text" class="form-control" value="{$info.name}" name="name">
+        </div>
+        <div class="form-group">
+            <label>音频时间</label>
+            <input  type="text" class="form-control" value="{$info.time}" name="time">
+        </div>
+        <div class="form-group">
+            <label>能否试听</label>
+            <input  type="text" class="form-control" value="{$info.try}" name="try">
+        </div>
+        <div class="form-group">
+            <label>所属课程id</label>
+            <input  type="text" class="form-control" value="{$info.cours}" name="cours">
+        </div>
+        <div class="form-group">
+            <label>所属标题等级</label>
+            <input  type="text" class="form-control" value="{$info.grade}" name="grade">
+        </div>
+        <div class="form-group">
+            <input type="hidden" name="id" value="{$info.id}">
+            <input type="submit" value="保存" class="btn btn-info">
+        </div>
+    </form>
+</div>
+{include file='public/footer'}

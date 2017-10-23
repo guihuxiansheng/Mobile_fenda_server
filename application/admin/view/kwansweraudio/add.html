@@ -1,0 +1,43 @@
+{include file='public/head'}
+{include file='public/header'}
+<div class="container mt-3">
+    <h2 id="container-title">添加快问回答音频</h2>
+     <form action="{:url('insert')}" method="post">
+        <div class="form-group">
+            <label>音频名称</label>
+            <input type="text" class="form-control"  name="name">
+        </div>
+        <div class="form-group">
+            <label>音频存储路径</label>
+            <input type="text" class="form-control"  name="path">
+        </div>
+        <div class="form-group">
+            <label>听过的人数</label>
+            <input type="text" class="form-control"  name="number">
+        </div>
+        <div class="form-group">
+            <label>点赞的人数</label>
+            <input type="text" class="form-control"  name="point_number">
+        </div>
+        <div class="form-group">
+            <label>0 是免费听，1 是1元偷偷听</label>
+            <input type="text" class="form-control"  name="status">
+        </div>
+        <div class="form-group">
+            <label>创建时间</label>
+            <input type="text" class="form-control"  name="create_time">
+        </div>
+        <div class="form-group">
+            <label>发表音频的专家（或答主）的id</label>
+            <input type="text" class="form-control"  name="expert_id">
+        </div>
+        <div class="form-group">
+            <label>对应回答的问题的id</label>
+            <input type="text" class="form-control"  name="kwproblem_id">
+        </div>
+        <div class="form-group">
+            <input type="submit" value="插入" class="btn btn-info">
+        </div>
+    </form>
+</div>
+{include file='public/footer'}

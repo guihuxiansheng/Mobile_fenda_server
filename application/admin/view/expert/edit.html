@@ -1,0 +1,40 @@
+{include file='public/head'}
+{include file='public/header'}
+<!-- <?php
+var_dump($info);
+?> -->
+
+<div class="container mt-3">
+    <h2 id="container-title">编辑答主信息</h2>
+    <form action="{:url('update')}" method="post">
+        <div class="form-group">
+            <label>答主名</label>
+            <input disabled type="text" class="form-control" value="{$info.expert_name}" name="expert_name">
+        </div>
+        <div class="form-group">
+            <label>简介</label>
+            <input type="text" class="form-control" value="{$info.introduction}" name="introduction">
+        </div>
+        <div class="form-group">
+            <label>分类ID</label>
+            <input type="text" class="form-control" value="{$info.classification_id}" name="classification_id">
+        </div>
+        <div class="form-group">
+            <label>擅长问题</label>
+            <input type="text" class="form-control" value="{$info.begoodat}" name="begoodat">
+        </div>
+        <div class="form-group">
+            <label>头衔</label>
+            <input type="text" class="form-control" value="{$info.rank}" name="rank">
+        </div>
+        <div class="form-group">
+            <label>身价</label>
+            <input type="text" class="form-control" value="{$info.worth}" name="worth">
+        </div>
+        <div class="form-group">
+            <input type="hidden" name="id" value="{$info.id}">
+            <input type="submit" value="保存" class="btn btn-info">
+        </div>
+    </form>
+</div>
+{include file='public/footer'}

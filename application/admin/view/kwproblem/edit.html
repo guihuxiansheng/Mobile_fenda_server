@@ -1,0 +1,40 @@
+{include file='public/head'}
+{include file='public/header'}
+<div class="container mt-3">
+    <h2 id="container-title">编辑快问问题</h2>
+    <form action="{:url('update')}" method="post">
+        <div class="form-group">
+            <label>问题内容</label>
+            <input  type="text" class="form-control" value="{$info.content}" name="content">
+        </div>
+        <div class="form-group">
+            <label>图片</label>
+            <input disabled type="text" class="form-control" value="{$info.picture}" name="picture">
+        </div>
+        <div class="form-group">
+            <label>为追问定义的父级ID</label>
+            <input disabled type="text" class="form-control" value="{$info.parent_id}" name="parent_id">
+        </div>
+        <div class="form-group">
+            <label>创建时间</label>
+            <input disabled type="text" class="form-control" value="{$info.create_time}" name="create_time">
+        </div>
+        <div class="form-group">
+            <label>问题是否匿名</label>
+            <input  type="text" class="form-control" value="{$info.whether}" name="whether">
+        </div>
+        <div class="form-group">
+            <label>发布该问题的用户ID</label>
+            <input disabled type="text" class="form-control" value="{$info.user_id}" name="user_id">
+        </div>
+        <div class="form-group">
+            <label>问题所属分类的ID</label>
+            <input disabled type="text" class="form-control" value="{$info.kwcate_id}" name="kwcate_id">
+        </div>
+        <div class="form-group">
+            <input type="hidden" name="id" value="{$info.id}">
+            <input type="submit" value="保存" class="btn btn-info">
+        </div>
+    </form>
+</div>
+{include file='public/footer'}
