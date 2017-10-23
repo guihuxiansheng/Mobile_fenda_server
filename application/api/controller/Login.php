@@ -19,24 +19,26 @@
 				'phone_number' => $user,
 				'captcha' => $code
 			];
+			// 验证输入
 			$result = $this->validate($login_user,'User');
 			if($result !== true){
 				return json([
 					'status'=> 1,
-					'message'=> $result.getError()
+					'message'=> $result
 				]);
 			}
+			// 获取用户信息和短信验证码信息
 			$db_user = model('login')->getLogin($user);
-			if(empty($db_user)){
-				$check_code = Common::check_phoneCode(0, $user, $code);
-				if($check_code['status'] === 0){
+			$check_code = Common::check_phoneCode(empty($db_user)?0: $db_user['id'], $user, $code);
+			if($check_code['status'] === 0){
+				if(empty($db_user)){
 					$register = model('login')->register($user);
 					if($register['status'] !== 0){
 						return json($register);
 					}
-				}else{
-					return json($check_code);
 				}
+			}else{
+				return json($check_code);
 			}
 			Session::set('user',$db_user);
 			return json([

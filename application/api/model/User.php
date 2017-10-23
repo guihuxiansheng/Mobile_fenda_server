@@ -15,6 +15,8 @@
 		function changePhone($id,$phone){
 			try{
 				db('user')->where(['id'=>$id])->update(['phone_number'=>$phone]);
+				$user = db('user')->where(['id'=>$id])->find();
+				Session::set('user',$user);
 				return true;
 			}catch(\Exception $e){
 				return false;
