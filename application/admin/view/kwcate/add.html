@@ -1,0 +1,20 @@
+{include file='public/head'}
+{include file='public/header'}
+<div class="container mt-3">
+    <h2 id="container-title">添加快问分类</h2>
+     <form action="{:url('insert')}" method="post">
+        <div class="form-group">
+            <label>分类名</label>
+            <input type="text" class="form-control"  name="classification">
+        </div>
+        <div class="form-group">
+            <label>专属分类</label>
+            <input type="text" class="form-control"  name="origin">
+        </div>
+        <div class="form-group">
+            <input type="submit" value="插入" class="btn btn-info">
+        </div>
+    </form>
+
+</div>
+{include file='public/footer'}

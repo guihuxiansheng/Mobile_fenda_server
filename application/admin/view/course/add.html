@@ -1,0 +1,43 @@
+{include file='public/head'}
+{include file='public/header'}
+<div class="container mt-3">
+    <h2 id="container-title">添加小讲课程</h2>
+     <form action="{:url('insert')}" method="post">
+        <div class="form-group">
+            <label>课程名称</label>
+            <input type="text" class="form-control"  name="courseName">
+        </div>
+        <div class="form-group">
+            <label>专家ID</label>
+            <input type="text" class="form-control"  name="expert_id">
+        </div>
+        <div class="form-group">
+            <label>所属专题ID</label>
+            <input type="text" class="form-control"  name="special_id">
+        </div>
+        <div class="form-group">
+            <label>简介</label>
+            <input type="text" class="form-control"  name="summary">
+        </div>
+        <div class="form-group">
+            <label>价钱</label>
+            <input type="text" class="form-control"  name="price">
+        </div>
+        <div class="form-group">
+            <label>参加人数</label>
+            <input type="text" class="form-control"  name="num">
+        </div>
+        <div class="form-group">
+            <label>所属分类id</label>
+            <input type="text" class="form-control"  name="categroies_id">
+        </div>
+        <div class="form-group">
+            <label>讲单id</label>
+            <input type="text" class="form-control"  name="singleid">
+        </div>
+        <div class="form-group">
+            <input type="submit" value="插入" class="btn btn-info">
+        </div>
+    </form>
+</div>
+{include file='public/footer'}
