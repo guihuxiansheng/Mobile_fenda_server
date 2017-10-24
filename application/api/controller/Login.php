@@ -68,8 +68,7 @@
 				return json(Common::create_phoneCode($user['id'],input('phone')));
 			}else{
 				return json(Common::create_phoneCode(0,input('phone')));
-			}
-			
+			}	
 		}
 	}
 ?>
