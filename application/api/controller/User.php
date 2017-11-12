@@ -23,16 +23,18 @@
 		}
 		function upload(){
 			$file_pic = request()->file('image');
+			return json($file_pic);
 			if(!empty($file_pic)){
-				$info = $file_pic->validate(['ext'=>'jpeg,jpg,png,gif'])->move('uploads');//'size'=>1048576,
+				$path = 'uploads'.DS.$this->login['id'].DS.'avatar';
+				$info = $file_pic->validate(['ext'=>'jpeg,jpg,png,gif'])->move($path);//'size'=>1048576,
 				if($info){
-					$path = $info->getSaveName();
-					Session::set('image','uploads'.DS.$path);
+					$path_file = $info->getSaveName();
+					Session::set('image',$path.DS.$path_file);
 
 					return json_encode([
 						'status'=>0,
 						'message'=> '上传成功！',
-						'src' => 'uploads'.DS.$path
+						'src' => $path.DS.$path_file
 					]);
 				}else{
 					return json_encode([
