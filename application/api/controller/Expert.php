@@ -12,7 +12,7 @@
 		{
 			$expert_list=db("expert")
 				->alias("e")
-				->join("answeraudio a","a.id=e.answeraudio_id")
+				->join("answeraudio a","a.expert_id=e.id")
 				->order("e.create_time desc")
 				->limit(3)
 				->select();
@@ -22,7 +22,7 @@
 		{
 			$expert_list=db("expert")
 				->alias("e")
-				->join("answeraudio a","a.id=e.answeraudio_id")
+				->join("answeraudio a","a.expert_id=e.id")
 				->join("problem p","p.id=a.problem_id")
 				->order("p.number desc")
 				->limit(3)
@@ -33,7 +33,7 @@
 		{
 			$expert_list=db("expert")
 				->alias("e")
-				->join("answeraudio a","a.id=e.answeraudio_id")
+				->join("answeraudio a","a.expert_id=e.id")
 				->join("problem p","p.id=a.problem_id")
 				->order("p.number desc")
 				->limit(5)
@@ -44,7 +44,7 @@
 		{
 			$one_list=db("expert")
 				->alias("e")
-				->join("answeraudio a","a.id=e.answeraudio_id")
+				->join("answeraudio a","a.expert_id=e.id")
 				->join("problem p","p.id=a.problem_id")
 				->limit(5)
 				->select();
